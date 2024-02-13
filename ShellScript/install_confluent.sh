@@ -25,5 +25,8 @@ done
 
 export CONFLUENT_HOME=~/confluent/confluent-7.6.0
 export PATH=$PATH:$CONFLUENT_HOME/bin
+echo "export CONFLUENT_HOME=~/confluent/confluent-7.6.0" >> ~/.bashrc
+echo "export PATH=$PATH:$CONFLUENT_HOME/bin" >> ~/.bashrc
+source ~/.bashrc
 
 confluent local services start
