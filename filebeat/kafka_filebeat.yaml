@@ -1,0 +1,35 @@
+filebeat.inputs:
+- type: log
+  enabled: true
+  #document_type: BROWSER
+  paths:
+    - /home/ubuntu/world_money/world_money.log
+  json.keys_under_root: true
+  fields:
+          #index_name: "CHROME"
+    topic_name: "worldmoney.filebeat"
+
+  encoding: utf-8
+
+
+output.kafka:
+  enabled: true
+  hosts: [ 'localhost:9092' ]
+  topic: '%{[fields.topic_name]}'
+
+  partition.round_robin:
+    reachable_only: false
+
+    #required_acks: 1
+
+  #sasl.mechanism: PLAIN
+  #username: producer
+  #password: dochi
+
+  codec.json:
+    pretty: false
+
+
+logging.level: debug
+path.data: /home/ubuntu/filebeat/data
+path.logs: /home/ubuntu/filebeat/logs
