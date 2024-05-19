@@ -9,7 +9,7 @@ spark = SparkSession \
         .getOrCreate()
 
 kafka_bootstrap_servers = "172.31.9.181:9092"
-topic_name = "worldmoney.filebeat"
+topic_name = "worldmoney.filebeat.spark"
 
 print("=================================Start Read Kafka Topic=================================")
 df = spark \
