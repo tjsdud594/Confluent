@@ -22,6 +22,8 @@ print("=================================End Read Kafka Topic====================
 
 print(df.printSchema())
 
+
+## complete 모드 사용시에는 aggregation 필요 
 query = df.writeStream \
         .format("console") \
         .outputMode("complete") \
