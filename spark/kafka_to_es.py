@@ -6,6 +6,7 @@ spark = SparkSession \
         .builder \
         .appName("readfromkafka") \
         .master("local[*]") \
+        .config("es.index.auto.create", "true") \
         .getOrCreate()
 
 kafka_bootstrap_servers = "172.31.9.181:9092"
@@ -24,18 +25,18 @@ print(df.printSchema())
 
 
 ## complete 모드 사용시에는 aggregation 필요 
-query = df.writeStream \
-        .format("console") \
-        .outputMode("complete") \
-        .start()
-
-query.awaitTermination()
-
 # query = df.writeStream \
-# .outputMode("append") \
-# .queryName("writing_to_es") \
-# .format("org.elasticsearch.spark.sql") \
-# .option("checkpointLocation", "/tmp/") \
-# .option("es.resource", "index/type") \
-# .option("es.nodes", "localhost") \
-# .start()
+#         .format("console") \
+#         .outputMode("complete") \
+#         .start()
+
+# query.awaitTermination()
+
+query = df.writeStream \
+        .outputMode("append") \
+        .queryName("writing_to_es") \
+        .format("org.elasticsearch.spark.sql") \
+        .option("checkpointLocation", "/tmp/") \
+        .option("es.resource", "index/worldmoney.filebeat.spark") \
+        .option("es.nodes", "localhost:9200") \
+        .start()
